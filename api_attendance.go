@@ -72,7 +72,7 @@ func (c *DingTalkClient) ListAttendanceRecord(ulist []string, dateFrom time.Time
 		"checkDateTo":   dateTo.Format("2006-01-02 15:04:05"),   // "yyyy-MM-dd hh:mm:ss",
 		"userIds":       ulist,                                  // 企业内的员工id列表，最多不能超过50个
 	}
-	return resp.Records, c.httpRPC("/attendance/listRecord", nil, request, &resp)
+	return resp.Records, c.HttpRPC("/attendance/listRecord", nil, request, &resp)
 }
 
 type listAttendanceResultResp struct {
@@ -100,5 +100,5 @@ func (c *DingTalkClient) ListAttendanceResult(ulist []string, dateFrom, dateTo t
 		"offset":       offset,                                 // 必填，第一次传0，如果还有多余数据，下次传之前的offset加上limit的值
 		"limit":        lmt,                                    // 最多50
 	}
-	return resp, c.httpRPC("/attendance/list", nil, request, &resp)
+	return resp, c.HttpRPC("/attendance/list", nil, request, &resp)
 }

@@ -1,7 +1,7 @@
 //普通钉钉用户账号开放相关接口
 package godingtalk
 
-import(
+import (
 	"net/url"
 )
 
@@ -16,8 +16,8 @@ func (c *DingTalkClient) RefreshSnsAccessToken() error {
 	params.Add("appid", c.SnsAppID)
 	params.Add("appsecret", c.SnsAppSecret)
 
-	err := c.httpRPC("sns/gettoken", params, nil, &data)
-	if err==nil {
+	err := c.HttpRPC("sns/gettoken", params, nil, &data)
+	if err == nil {
 		c.SnsAccessToken = data.AccessToken
 	}
 	return err
@@ -33,7 +33,7 @@ type SnsPersistentCodeResponse struct {
 
 //获取用户授权的持久授权码
 func (c *DingTalkClient) GetSnsPersistentCode(tmpAuthCode string) (string, string, string, error) {
-	c.RefreshSnsAccessToken()
+	_ = c.RefreshSnsAccessToken()
 
 	params := url.Values{}
 	params.Add("access_token", c.SnsAccessToken)
@@ -44,12 +44,11 @@ func (c *DingTalkClient) GetSnsPersistentCode(tmpAuthCode string) (string, strin
 
 	var data SnsPersistentCodeResponse
 	err := c.httpRequest("sns/get_persistent_code", params, request, &data)
-	if err!=nil {
-		return "","","",err
+	if err != nil {
+		return "", "", "", err
 	}
 	return data.UnionID, data.OpenID, data.PersistentCode, nil
 }
-
 
 type SnsTokenResponse struct {
 	OAPIResponse
@@ -59,19 +58,19 @@ type SnsTokenResponse struct {
 
 //获取用户授权的SNS_TOKEN
 func (c *DingTalkClient) GetSnsToken(openid, persistentCode string) (string, error) {
-	c.RefreshSnsAccessToken()
+	_ = c.RefreshSnsAccessToken()
 
 	params := url.Values{}
 	params.Add("access_token", c.SnsAccessToken)
 
 	request := map[string]interface{}{
-		"openid": openid,
+		"openid":          openid,
 		"persistent_code": persistentCode,
 	}
 
 	var data SnsTokenResponse
 	err := c.httpRequest("sns/get_sns_token", params, request, &data)
-	if err!=nil {
+	if err != nil {
 		return "", err
 	}
 	return data.SnsToken, err
@@ -80,25 +79,25 @@ func (c *DingTalkClient) GetSnsToken(openid, persistentCode string) (string, err
 type SnsUserInfoResponse struct {
 	OAPIResponse
 
-	CorpInfo []struct{
-		CorpName string `json:"corp_name"`
-		IsAuth bool `json:"is_auth"`
-		IsManager bool `json:"is_manager"`
-		RightsLevel int `json:"rights_level"`
+	CorpInfo []struct {
+		CorpName    string `json:"corp_name"`
+		IsAuth      bool   `json:"is_auth"`
+		IsManager   bool   `json:"is_manager"`
+		RightsLevel int    `json:"rights_level"`
 	} `json:"corp_info"`
 
 	UserInfo struct {
 		MaskedMobile string `json:"marskedMobile"`
-		Nick string `json:"nick"`
-		OpenID string `json:"openid"`
-		UnionID string `json:"unionid"`
-		DingID string `json:"dingId"`
+		Nick         string `json:"nick"`
+		OpenID       string `json:"openid"`
+		UnionID      string `json:"unionid"`
+		DingID       string `json:"dingId"`
 	} `json:"user_info"`
 }
 
 //获取用户授权的个人信息
 func (c *DingTalkClient) GetSnsUserInfo(snsToken string) (SnsUserInfoResponse, error) {
-	c.RefreshSnsAccessToken()
+	_ = c.RefreshSnsAccessToken()
 
 	params := url.Values{}
 	params.Add("sns_token", snsToken)

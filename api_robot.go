@@ -40,7 +40,7 @@ func (c *DingTalkClient) SendRobotTextMessage(accessToken string, msg string) (d
 			"content": msg,
 		},
 	}
-	err = c.httpRPC("robot/send", params, request, &data)
+	err = c.HttpRPC("robot/send", params, request, &data)
 	return data, err
 }
 
@@ -55,7 +55,7 @@ func (c *DingTalkClient) SendRobotMarkdownMessage(accessToken string, title stri
 			"text":  msg,
 		},
 	}
-	err = c.httpRPC("robot/send", params, request, &data)
+	err = c.HttpRPC("robot/send", params, request, &data)
 	return data, err
 }
 
@@ -70,6 +70,6 @@ func (c *DingTalkClient) SendRobotTextAtMessage(accessToken string, msg string, 
 		},
 		"at": at,
 	}
-	err = c.httpRPC("robot/send", params, request, &data)
+	err = c.HttpRPC("robot/send", params, request, &data)
 	return data, err
 }

@@ -26,7 +26,7 @@ func (c *DingTalkClient) UploadMedia(mediaType string, filename string, reader i
 	}
 	params := url.Values{}
 	params.Add("type", mediaType)
-	err = c.httpRPC("media/upload", params, upload, &media)
+	err = c.HttpRPC("media/upload", params, upload, &media)
 	return media, err
 }
 
@@ -36,6 +36,6 @@ func (c *DingTalkClient) DownloadMedia(mediaID string, write io.Writer) error {
 	data.Writer = write
 	params := url.Values{}
 	params.Add("media_id", mediaID)
-	err := c.httpRPC("media/get", params, nil, &data)
+	err := c.HttpRPC("media/get", params, nil, &data)
 	return err
 }

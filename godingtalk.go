@@ -140,7 +140,7 @@ func (c *DingTalkClient) RefreshAccessToken(p ...interface{}) error {
 		params.Add("appsecret", c.CorpSecret)
 	}
 
-	err = c.httpRPC("gettoken", params, nil, &data)
+	err = c.HttpRPC("gettoken", params, nil, &data)
 	if err == nil {
 		c.AccessToken = data.AccessToken
 		data.Expires = data.Expires | 7200
@@ -158,10 +158,10 @@ func (c *DingTalkClient) GetJsAPITicket() (ticket string, err error) {
 	if err == nil {
 		return data.Ticket, err
 	}
-	err = c.httpRPC("get_jsapi_ticket", nil, nil, &data)
+	err = c.HttpRPC("get_jsapi_ticket", nil, nil, &data)
 	if err == nil {
 		ticket = data.Ticket
-		cache.Set(&data)
+		_ = cache.Set(&data)
 	}
 	return ticket, err
 }

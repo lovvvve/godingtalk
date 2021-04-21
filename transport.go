@@ -29,7 +29,7 @@ type DownloadFile struct {
 	Reader   io.Reader
 }
 
-func (c *DingTalkClient) httpRPC(path string, params url.Values, requestData interface{}, responseData Unmarshallable) error {
+func (c *DingTalkClient) HttpRPC(path string, params url.Values, requestData interface{}, responseData Unmarshallable) error {
 	if c.AccessToken != "" {
 		if params == nil {
 			params = url.Values{}
@@ -108,11 +108,11 @@ func (c *DingTalkClient) httpRequest(path string, params url.Values, requestData
 			log.Println(string(content))
 		}
 		if err == nil {
-			json.Unmarshal(content, responseData)
+			_ = json.Unmarshal(content, responseData)
 			return responseData.checkError()
 		}
 	} else {
-		io.Copy(responseData.getWriter(), resp.Body)
+		_, _ = io.Copy(responseData.getWriter(), resp.Body)
 		return responseData.checkError()
 	}
 	return err

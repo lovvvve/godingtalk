@@ -53,7 +53,7 @@ func (c *DingTalkClient) ListEvents(staffid string, from time.Time, to time.Time
 		StaffId: staffid,
 	}
 	var resp ListEventsResponse
-	err = c.httpRPC("topapi/calendar/list", nil, data, &resp)
+	err = c.HttpRPC("topapi/calendar/list", nil, data, &resp)
 	events = resp.Result.Events
 	return events, err
 }

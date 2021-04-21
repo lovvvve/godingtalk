@@ -54,7 +54,7 @@ type DepartmentList struct {
 // DepartmentList is 获取部门列表
 func (c *DingTalkClient) DepartmentList() (DepartmentList, error) {
 	var data DepartmentList
-	err := c.httpRPC("department/list", nil, nil, &data)
+	err := c.HttpRPC("department/list", nil, nil, &data)
 	return data, err
 }
 
@@ -63,7 +63,7 @@ func (c *DingTalkClient) DepartmentDetail(id int) (Department, error) {
 	var data Department
 	params := url.Values{}
 	params.Add("id", fmt.Sprintf("%d", id))
-	err := c.httpRPC("department/get", params, nil, &data)
+	err := c.HttpRPC("department/get", params, nil, &data)
 	return data, err
 }
 
@@ -78,7 +78,7 @@ func (c *DingTalkClient) UserList(departmentID, offset, size int) (UserList, err
 	params.Add("department_id", fmt.Sprintf("%d", departmentID))
 	params.Add("offset", fmt.Sprintf("%d", offset))
 	params.Add("size", fmt.Sprintf("%d", size))
-	err := c.httpRPC("user/list", params, nil, &data)
+	err := c.HttpRPC("user/list", params, nil, &data)
 	return data, err
 }
 
@@ -93,7 +93,7 @@ func (c *DingTalkClient) CreateChat(name string, owner string, useridlist []stri
 		"owner":      owner,
 		"useridlist": useridlist,
 	}
-	err := c.httpRPC("chat/create", nil, request, &data)
+	err := c.HttpRPC("chat/create", nil, request, &data)
 	return data.Chatid, err
 }
 
@@ -102,7 +102,7 @@ func (c *DingTalkClient) UserInfoByCode(code string) (User, error) {
 	var data User
 	params := url.Values{}
 	params.Add("code", code)
-	err := c.httpRPC("user/getuserinfo", params, nil, &data)
+	err := c.HttpRPC("user/getuserinfo", params, nil, &data)
 	return data, err
 }
 
@@ -111,7 +111,7 @@ func (c *DingTalkClient) UserInfoByUserId(userid string) (User, error) {
 	var data User
 	params := url.Values{}
 	params.Add("userid", userid)
-	err := c.httpRPC("user/get", params, nil, &data)
+	err := c.HttpRPC("user/get", params, nil, &data)
 	return data, err
 }
 
@@ -124,7 +124,7 @@ func (c *DingTalkClient) UseridByUnionId(unionid string) (string, error) {
 
 	params := url.Values{}
 	params.Add("unionid", unionid)
-	err := c.httpRPC("user/getUseridByUnionid", params, nil, &data)
+	err := c.HttpRPC("user/getUseridByUnionid", params, nil, &data)
 	if err != nil {
 		return "", err
 	}
@@ -141,6 +141,6 @@ func (c *DingTalkClient) UseridByMobile(mobile string) (string, error) {
 
 	params := url.Values{}
 	params.Add("mobile", mobile)
-	err := c.httpRPC("user/get_by_mobile", params, nil, &data)
+	err := c.HttpRPC("user/get_by_mobile", params, nil, &data)
 	return data.UserID, err
 }

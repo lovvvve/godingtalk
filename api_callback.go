@@ -17,7 +17,7 @@ func (c *DingTalkClient) RegisterCallback(callbacks []string, token string, aes_
 		"aes_key":       aes_key,
 		"url":           callbackURL,
 	}
-	err := c.httpRPC("call_back/register_call_back", nil, request, &data)
+	err := c.HttpRPC("call_back/register_call_back", nil, request, &data)
 	return err
 }
 
@@ -30,20 +30,20 @@ func (c *DingTalkClient) UpdateCallback(callbacks []string, token string, aes_ke
 		"aes_key":       aes_key,
 		"url":           callbackURL,
 	}
-	err := c.httpRPC("call_back/update_call_back", nil, request, &data)
+	err := c.HttpRPC("call_back/update_call_back", nil, request, &data)
 	return err
 }
 
 //DeleteCallback is 删除事件回调接口
 func (c *DingTalkClient) DeleteCallback() error {
 	var data OAPIResponse
-	err := c.httpRPC("call_back/delete_call_back", nil, nil, &data)
+	err := c.HttpRPC("call_back/delete_call_back", nil, nil, &data)
 	return err
 }
 
 //ListCallback is 查询事件回调接口
 func (c *DingTalkClient) ListCallback() (Callback, error) {
 	var data Callback
-	err := c.httpRPC("call_back/get_call_back", nil, nil, &data)
+	err := c.HttpRPC("call_back/get_call_back", nil, nil, &data)
 	return data, err
 }

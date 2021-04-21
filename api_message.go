@@ -19,7 +19,7 @@ func (c *DingTalkClient) SendAppMessage(agentID string, touser string, msg strin
 			"content": msg,
 		},
 	}
-	err := c.httpRPC("message/send", nil, request, &data)
+	err := c.HttpRPC("message/send", nil, request, &data)
 	return err
 }
 
@@ -35,7 +35,7 @@ func (c *DingTalkClient) SendAppOAMessage(agentID string, touser string, msg OAM
 		"msgtype": "oa",
 		"oa":      msg,
 	}
-	err := c.httpRPC("message/send", nil, request, &data)
+	err := c.HttpRPC("message/send", nil, request, &data)
 	return err
 }
 
@@ -56,7 +56,7 @@ func (c *DingTalkClient) SendAppLinkMessage(agentID, touser string, title, text 
 			"text":       text,
 		},
 	}
-	err := c.httpRPC("message/send", nil, request, &data)
+	err := c.HttpRPC("message/send", nil, request, &data)
 	return err
 }
 
@@ -70,7 +70,7 @@ func (c *DingTalkClient) SendTextMessage(sender string, cid string, msg string) 
 			"content": msg,
 		},
 	}
-	err = c.httpRPC("chat/send", nil, request, &data)
+	err = c.HttpRPC("chat/send", nil, request, &data)
 	return data, err
 }
 
@@ -84,7 +84,7 @@ func (c *DingTalkClient) SendImageMessage(sender string, cid string, mediaID str
 			"media_id": mediaID,
 		},
 	}
-	err = c.httpRPC("chat/send", nil, request, &data)
+	err = c.HttpRPC("chat/send", nil, request, &data)
 	return data, err
 }
 
@@ -99,7 +99,7 @@ func (c *DingTalkClient) SendVoiceMessage(sender string, cid string, mediaID str
 			"duration": duration,
 		},
 	}
-	err = c.httpRPC("chat/send", nil, request, &data)
+	err = c.HttpRPC("chat/send", nil, request, &data)
 	return data, err
 }
 
@@ -113,7 +113,7 @@ func (c *DingTalkClient) SendFileMessage(sender string, cid string, mediaID stri
 			"media_id": mediaID,
 		},
 	}
-	err = c.httpRPC("chat/send", nil, request, &data)
+	err = c.HttpRPC("chat/send", nil, request, &data)
 	return data, err
 }
 
@@ -130,7 +130,7 @@ func (c *DingTalkClient) SendLinkMessage(sender string, cid string, mediaID stri
 			"text":       text,
 		},
 	}
-	err = c.httpRPC("chat/send", nil, request, &data)
+	err = c.HttpRPC("chat/send", nil, request, &data)
 	return data, err
 }
 
@@ -181,7 +181,7 @@ func (c *DingTalkClient) SendOAMessage(sender string, cid string, msg OAMessage)
 		"msgtype": "oa",
 		"oa":      msg,
 	}
-	err = c.httpRPC("chat/send", nil, request, &data)
+	err = c.HttpRPC("chat/send", nil, request, &data)
 	return data, err
 }
 
@@ -191,6 +191,6 @@ func (c *DingTalkClient) GetMessageReadList(messageID string, cursor int, size i
 	params.Add("messageId", messageID)
 	params.Add("cursor", strconv.Itoa(cursor))
 	params.Add("size", strconv.Itoa(size))
-	err = c.httpRPC("chat/getReadList", params, nil, &data)
+	err = c.HttpRPC("chat/getReadList", params, nil, &data)
 	return data, err
 }

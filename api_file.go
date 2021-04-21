@@ -33,6 +33,6 @@ func (c *DingTalkClient) CreateFile(size int64) (file FileResponse, err error) {
 	}
 	params := url.Values{}
 	params.Add("size", fmt.Sprintf("%d", size))
-	err = c.httpRPC("file/upload/create", params, nil, &file)
+	err = c.HttpRPC("file/upload/create", params, nil, &file)
 	return file, err
 }
